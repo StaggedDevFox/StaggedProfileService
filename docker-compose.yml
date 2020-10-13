@@ -1,0 +1,22 @@
+version: '2'
+networks:
+  local:
+    driver: bridge
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - local
+    links:
+      - "db:redis"
+  db:
+    image: "redis:alpine"
+    hostname: redis
+    networks:
+      - local
+    ports:
+      - "6379:6379"
